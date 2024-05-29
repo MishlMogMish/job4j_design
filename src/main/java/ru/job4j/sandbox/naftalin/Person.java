@@ -16,11 +16,13 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{"
-                + "name='" + name + '\''
-                + ", age=" + age
-                + ", date=" + date
-                + '}';
+        final StringBuffer sb = new StringBuffer("Person{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", age=").append(age);
+        sb.append(", date=").append(date);
+        sb.append('}');
+        return sb.toString();
     }
 }
+
 
