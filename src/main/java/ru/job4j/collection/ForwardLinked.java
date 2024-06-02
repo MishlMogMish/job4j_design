@@ -11,15 +11,23 @@ public class ForwardLinked<T> implements Iterable<T> {
     private ForwardLinked.Node<T> head;
 
     public void add(T value) {
-        head = new ForwardLinked.Node<>(value, head);
+        if (head == null) {
+            head = new Node<>(value, null);
+        } else {
+            Node<T> tail = head;
+            for (int i = 0; i < size - 1; i++) {
+                tail = tail.next;
+            }
+            tail.next = new Node<T>(value, null);
+        }
         size++;
         modCount++;
     }
 
     public T get(int index) {
         Objects.checkIndex(index, size);
-        ForwardLinked.Node<T> indexNode = head;
-        for (int i = 0; i < size - index - 1; i++) {
+        Node<T> indexNode = head;
+        for (int i = 0; i < index; i++) {
             indexNode = indexNode.next;
         }
         return indexNode.value;
@@ -29,12 +37,10 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head == null) {
             throw new NoSuchElementException();
         }
-        Node<T> last = head;
-        for (int i = 0; i < size - 1; i++) {
-            last = last.next;
-        }
-        T value = last.value;
-        last = null;
+        T value = head.value;
+        Node<T> next = head.next;
+        head = null;
+        head = next;
         size--;
         modCount++;
         return value;
@@ -45,17 +51,7 @@ public class ForwardLinked<T> implements Iterable<T> {
         return new Iterator<T>() {
             int counter = 0;
             int expectedModCount = modCount;
-            ForwardLinked.Node<T> node = inverseLinkedList(head);
-
-            ForwardLinked.Node<T> inverseLinkedList(ForwardLinked.Node<T> head) {
-                ForwardLinked.Node<T> nextNode = head;
-                ForwardLinked.Node<T> beforeNode = null;
-                for (int i = 0; i < size; i++) {
-                    beforeNode = new ForwardLinked.Node<>(nextNode.value, beforeNode);
-                    nextNode = nextNode.next;
-                }
-                return beforeNode;
-            }
+            ForwardLinked.Node<T> node = head;
 
             @Override
             public boolean hasNext() {
