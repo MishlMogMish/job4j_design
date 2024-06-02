@@ -12,7 +12,15 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
 
     @Override
     public void add(E value) {
-        head = new Node<>(value, head);
+        if (head == null) {
+            head = new Node<>(value, null);
+        } else {
+            Node<E> tail = head;
+            for (int i = 0; i < size - 1; i++) {
+                tail = tail.next;
+            }
+            tail.next = new Node<E>(value, null);
+        }
         size++;
         modCount++;
     }
@@ -21,7 +29,7 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
         Node<E> indexNode = head;
-        for (int i = 0; i < size - index - 1; i++) {
+        for (int i = 0; i < index; i++) {
             indexNode = indexNode.next;
         }
         return indexNode.value;
@@ -32,17 +40,7 @@ public class SimpleLinkedList<E> implements SimpleLinked<E> {
         return new Iterator<E>() {
             int counter = 0;
             int expectedModCount = modCount;
-            Node<E> node = inverseLinkedList(head);
-
-            Node<E> inverseLinkedList(Node<E> head) {
-                Node<E> nextNode = head;
-                Node<E> beforeNode = null;
-                for (int i = 0; i < size; i++) {
-                    beforeNode = new Node<>(nextNode.value, beforeNode);
-                    nextNode = nextNode.next;
-                }
-                return beforeNode;
-            }
+            Node<E> node = head;
 
             @Override
             public boolean hasNext() {
