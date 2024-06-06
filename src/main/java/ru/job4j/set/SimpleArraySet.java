@@ -19,12 +19,14 @@ public class SimpleArraySet<T> implements SimpleSet<T> {
 
     @Override
     public boolean contains(T value) {
-        boolean isContained = false;
-        Iterator<T> it = set.iterator();
-        while (it.hasNext()) {
-            if (Objects.equals(it.next(), value)) {
-                isContained = true;
-                break;
+        boolean isContained = set.size() != 0;
+        if (isContained) {
+            isContained = false;
+            for (T t : set) {
+                if (Objects.equals(t, value)) {
+                    isContained = true;
+                    break;
+                }
             }
         }
         return isContained;
