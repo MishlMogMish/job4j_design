@@ -5,13 +5,15 @@ import java.util.function.Predicate;
 
 public class ListUtils {
     public static <T> void addBefore(List<T> list, int index, T value) {
-        list.add(index, value);
+        Objects.checkIndex(index, list.size());
+        ListIterator<T> listIterator = list.listIterator(index);
+        listIterator.add(value);
     }
 
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        list.add(index + 1, value);
-    }
+        ListIterator<T> listIterator = list.listIterator(index + 1);
+        listIterator.add(value);    }
 
     public static <T> void removeIf(List<T> list, Predicate<T> filter) {
         ListIterator<T> iterator = list.listIterator();
