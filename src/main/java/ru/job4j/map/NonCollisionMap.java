@@ -18,10 +18,9 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        int index = indexFor(hash(Objects.hashCode(key)));
         boolean result = false;
-        if (table[index] == null) {
-            table[index] = new MapEntry<>(key, value);
+        if (table[index(key)] == null) {
+            table[index(key)] = new MapEntry<>(key, value);
             count++;
             modCount++;
             result = true;
@@ -29,15 +28,17 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
         return result;
     }
 
+    private int index(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
     private void expand() {
         capacity *= 2;
         MapEntry<K, V>[] oldTable = table;
         table = new MapEntry[capacity];
-        count = 0;
-        modCount = 0;
         for (MapEntry<K, V> entry : oldTable) {
             if (entry != null) {
-                put(entry.key, entry.value);
+                table[index(entry.key)] = entry;
             }
         }
         oldTable = null;
@@ -53,11 +54,11 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
 
     @Override
     public V get(K key) {
-        return isExist(key) ? table[indexFor(hash(Objects.hashCode(key)))].value : null;
+        return isExist(key) ? table[index(key)].value : null;
     }
 
     private boolean isExist(K key) {
-        int index = indexFor(hash(Objects.hashCode(key)));
+        int index = index(key);
         MapEntry<K, V> el = table[index];
         return el != null && Objects.hashCode(key) == Objects.hashCode(el.key)
                 && Objects.equals(key, el.key);
@@ -67,7 +68,7 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
     public boolean remove(K key) {
         boolean isRemoved = false;
         if (isExist(key)) {
-            table[indexFor(hash(Objects.hashCode(key)))] = null;
+            table[index(key)] = null;
             count--;
             modCount--;
             isRemoved = true;
@@ -103,7 +104,6 @@ public class NonCollisionMap<K, V> implements SimpleMap<K, V> {
                 while (index <= count && Objects.equals(table[index], null)) {
                     index++;
                 }
-
                 return table[index++].key;
             }
         };
