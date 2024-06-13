@@ -57,4 +57,43 @@ public class SimpleTreeTest {
         tree.add(5, 6);
         assertThat(tree.findBy(3).isPresent()).isTrue();
     }
+
+    @Test
+    void whenNotBinary() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(tree.findBy(6)).isPresent();
+        assertThat(tree.isBinary()).isFalse();
+    }
+
+    @Test
+    void whenBinary() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        assertThat(tree.findBy(6)).isPresent();
+        assertThat(tree.isBinary()).isTrue();
+    }
+
+    @Test
+    void whenNotBinary4Nodes() {
+        SimpleTree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        tree.add(6, 7);
+        tree.add(6, 8);
+        tree.add(6, 9);
+        tree.add(6, 10);
+        assertThat(tree.findBy(6)).isPresent();
+        assertThat(tree.isBinary()).isFalse();
+    }
+
 }
