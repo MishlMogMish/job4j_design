@@ -13,8 +13,8 @@ public class SimpleQueue<T> {
             throw new NoSuchElementException("Queue is empty");
         }
         if (outCounter == 0) {
-            int bulk = inCounter;
-            for (int i = 0; i < bulk; i++) {
+            int itemsToTransfer = inCounter;
+            for (int i = 0; i < itemsToTransfer; i++) {
                 output.push(input.pop());
                 inCounter--;
                 outCounter++;

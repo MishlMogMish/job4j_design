@@ -20,9 +20,9 @@ public class RevertLinked<T> implements Iterable<T> {
     }
 
     public boolean revert() {
-        boolean isReverted = head != null && head.next != null;
+        boolean canBeReverted = head != null && head.next != null;
 
-        if (isReverted) {
+        if (canBeReverted) {
             Node<T> prev = null;
             Node<T> curr = head;
             Node<T> next;
@@ -35,12 +35,12 @@ public class RevertLinked<T> implements Iterable<T> {
             }
             head = prev;
         }
-        return isReverted;
+        return canBeReverted;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             Node<T> node = head;
 
             @Override
@@ -64,8 +64,8 @@ public class RevertLinked<T> implements Iterable<T> {
         T value;
         Node<T> next;
 
-        public Node(T alue, Node<T> next) {
-            this.value = alue;
+        public Node(T value, Node<T> next) {
+            this.value = value;
             this.next = next;
         }
     }
