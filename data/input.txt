@@ -1,0 +1,3 @@
+login=login1
+password=password2
+url=url3
