@@ -17,7 +17,7 @@ public class LogFilter {
             while ((string = input.readLine()) != null) {
                 String[] a = string.split(" ");
 
-                if (a[a.length - 2].equals("404")) {
+                if ("404".equals(a[a.length - 2])) {
                     list.add(string);
                 }
             }
