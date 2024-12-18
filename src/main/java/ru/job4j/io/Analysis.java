@@ -5,7 +5,7 @@ import java.io.*;
 public class Analysis {
     public void unavailable(String source, String target) {
         boolean isPaused = false;
-        String startPauseTime = "";
+        StringBuilder pauseTimeIntervals = new StringBuilder();
         final String TIME_REGEX = "^([01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$";
         
         try (BufferedReader reader = new BufferedReader(new FileReader(source));
@@ -24,13 +24,15 @@ public class Analysis {
                 int status = Integer.parseInt(statusAndTime[0]);
 
                 if (status >= 400 && !isPaused) {
-                    startPauseTime = statusAndTime[1];
+                    pauseTimeIntervals.append(statusAndTime[1]).append(";");
                     isPaused = true;
                 } else if (status < 400 && isPaused) {
-                    writer.println(startPauseTime + ";" + statusAndTime[1]);
+                    pauseTimeIntervals.append(statusAndTime[1]).append(";\n");
                     isPaused = false;
                 }
             }
+            writer.println(pauseTimeIntervals);
+
         } catch (IOException e) {
             throw new IllegalStateException("Error reading or writing file", e);
         }
@@ -38,6 +40,6 @@ public class Analysis {
 
     public static void main(String[] args) {
         Analysis analysis = new Analysis();
-        analysis.unavailable("data/server.log", "data/target.crv");
+        analysis.unavailable("data/server.log", "data/target.csv");
     }
 }
