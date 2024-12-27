@@ -8,23 +8,29 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    private final TreeMap<FileProperty, List<Path>> duplicatesMap = new TreeMap<>(
-            Comparator.comparing(FileProperty::name).thenComparing(FileProperty::size));
+    private final Map<FileProperty, List<Path>> duplicatesMap = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        FileProperty fileProp = new FileProperty(attrs.size(), file.getFileName().toString());
 
-        duplicatesMap.computeIfAbsent(fileProp, fileProperty -> new ArrayList<>()).add(file);
+        if (attrs.isRegularFile()) {
+            FileProperty fileProp = new FileProperty(attrs.size(), file.getFileName().toString());
+
+            duplicatesMap.computeIfAbsent(fileProp, fileProperty -> new ArrayList<>()).add(file);
+        }
         return FileVisitResult.CONTINUE;
     }
 
     public void printDuplicates() {
-        duplicatesMap.values()
+        duplicatesMap.entrySet()
                 .stream()
-                .filter(paths -> paths.size() > 1)
-                .forEach(paths -> {
-                    paths.forEach(System.out::println);
-                });
+                .filter(propertyListEntry -> propertyListEntry.getValue().size() > 1)
+                .sorted(Comparator
+                        .comparing(propertyListEntry -> propertyListEntry.getKey().name()))
+                .forEach(propertyListEntry -> propertyListEntry
+                        .getValue()
+                        .stream()
+                        .sorted()
+                        .forEach(System.out::println));
     }
 }
