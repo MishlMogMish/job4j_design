@@ -3,7 +3,6 @@ package ru.job4j.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -14,8 +13,18 @@ public class Search {
         return searcher.getPaths();
     }
 
+    private static void validateArgs(String[] args) {
+        if (args.length <= 0) {
+            throw new IllegalArgumentException(
+                    "No root folder provided or no file extension as a command-line arguments.");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        search(Paths.get("."), path -> path.toString().endsWith(".js"))
+        validateArgs(args);
+        Path root = Path.of(args[0]);
+        String fileExtension = args[1];
+        search(root, path -> path.toString().endsWith(fileExtension))
                 .forEach(System.out::println);
     }
 }
