@@ -48,7 +48,13 @@ public class Dir3 {
     }
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException(
+                    "No root folder provided. Please specify the root folder as a command-line argument.");
+        }
+
         Dir3 dir1 = new Dir3();
-        dir1.processDirectory(new File("C:\\Projects"));
+        File file = new File(args[0]);
+        dir1.processDirectory(file);
     }
 }
