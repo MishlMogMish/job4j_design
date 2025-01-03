@@ -14,7 +14,7 @@ public class Search {
     }
 
     private static void validateArgs(String[] args) {
-        if (args.length <= 0) {
+        if (args.length < 2) {
             throw new IllegalArgumentException(
                     "No root folder provided or no file extension as a command-line arguments.");
         }
