@@ -23,7 +23,7 @@ class AbuseTest {
         }
         File target = tempDir.resolve("target.txt").toFile();
         Abuse.drop(source.getAbsolutePath(), target.getAbsolutePath(), List.of("foolish", "php"));
-        Thread.sleep(60000);
+        Thread.sleep(300);
         StringBuilder result = new StringBuilder();
         try (BufferedReader input = new BufferedReader(new FileReader(target))) {
             input.lines().forEach(result::append);
@@ -34,7 +34,7 @@ class AbuseTest {
     @Test
     void drop1(@TempDir Path tempDir) throws  InterruptedException {
         System.out.println("Temporary directory: " + tempDir.toAbsolutePath());
-        Thread.sleep(60000);
+        Thread.sleep(300);
         System.out.println("Temporary directory: " + tempDir.toAbsolutePath());
     }
 
