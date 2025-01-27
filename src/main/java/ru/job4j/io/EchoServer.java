@@ -27,26 +27,23 @@ public class EchoServer {
                              new InputStreamReader(clientSocket.getInputStream()))) {
                     output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
 
-                    for (String line = input.readLine(); line != null && !line.isEmpty(); line = input.readLine()) {
-                        msgMatcher = msgPattern.matcher(line);
-                        String[] msgValues = null;
+                    msgMatcher = msgPattern.matcher(input.readLine());
+                    String[] msgValues = null;
 
-                        if (msgMatcher.find()) {
-                            msgValues = URLDecoder.decode(msgMatcher.group(1), StandardCharsets.UTF_8).split(" ");
-                        }
+                    if (msgMatcher.find()) {
+                        msgValues = URLDecoder.decode(msgMatcher.group(1), StandardCharsets.UTF_8).split(" ");
+                    }
 
-                        if (msgValues != null && "Exit".equals(msgValues[0])) {
-                            serverSocket.close();
-                        } else if (msgValues != null && msgValues.length == HELLO_MSG_WORD_COUNT
-                                && "Hello".equals(msgValues[0])) {
-                            output.write("Hello\n".getBytes());
-                        } else if (msgValues != null) {
-                            for (int i = 0; i < msgValues.length - WORDS_TO_DROP_AT_END; i++) {
-                                output.write((msgValues[i] + " ").getBytes());
-                            }
+                    if (msgValues != null && "Exit".equals(msgValues[0])) {
+                        serverSocket.close();
+                    } else if (msgValues != null && msgValues.length == HELLO_MSG_WORD_COUNT
+                            && "Hello".equals(msgValues[0])) {
+                        output.write("Hello\n".getBytes());
+                    } else if (msgValues != null) {
+                        for (int i = 0; i < msgValues.length - WORDS_TO_DROP_AT_END; i++) {
+                            output.write((msgValues[i] + " ").getBytes());
                         }
                     }
-                    output.flush();
                 }
             }
         }
