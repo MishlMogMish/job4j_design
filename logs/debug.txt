@@ -62,3 +62,11 @@ java.net.SocketException: Программа на вашем хост-компь
 	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:329)
 	at java.base/java.io.BufferedReader.readLine(BufferedReader.java:396)
 	at ru.job4j.sandbox.io.EchoServerWithMultipleLog.main(EchoServerWithMultipleLog.java:32)
+2025-01-30 14:54:32,810  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:32,824  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:40,333  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:40,348  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:45,149  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:45,162  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:53,938  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:25 - New client connected: /0:0:0:0:0:0:0:1
+2025-01-30 14:54:53,941  INFO ru.job4j.sandbox.io.EchoServerWithMultipleLog:main:48 - Server is shutting down by client request.
