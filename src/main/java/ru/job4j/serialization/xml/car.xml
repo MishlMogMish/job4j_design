@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<car isOffRoad="false" horsepower="30" model="BMW">
+    <owner name="Mike" age="35">
+        <license type="B" issuedYear="2010" />
+    </owner>
+    <maintenances>
+        <maintenance>First Service Check</maintenance>
+        <maintenance>Extended Service Check</maintenance>
+    </maintenances>
+</car>
